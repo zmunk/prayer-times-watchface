@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="watch_face_name">Prayer times</string>
+    <string name="colors_label">Color theme</string>
+    <string name="theme_one_label">Theme 1</string>
+    <string name="theme_two_label">Theme 2</string>
+    <string name="ranged_value_label">Ranged Value</string>
+    <string name="ranged_value_content_description">%1$s at %2$.2f, %3$.0f%% between %4$.2f and %5$.2f</string>
+    <string name="ranged_value_icon_only_content_description">Icon only</string>
+    <string name="ranged_value_text_only_content_description">Text only</string>
+    <string name="ranged_value_text_with_icon_content_description">Text with icon</string>
+    <string name="ranged_value_text_with_title_content_description">Text with title</string>
+    <string name="short_text_with_icon">w/Icon</string>
+    <string name="short_text_with_title">w/Title</string>
+    <string name="short_title">Title</string>
+    <string name="short_text_only">TxtOnly</string>
+</resources>

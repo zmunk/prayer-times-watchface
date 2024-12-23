@@ -1,0 +1,13 @@
+[versions]
+androidGradlePlugin = "8.7.3"
+kotlin = "1.9.25"
+androidx-wear-watchface = "1.2.1"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+[libraries]
+androidx-wear-watchface-complications-data-source-ktx = { module = "androidx.wear.watchface:watchface-complications-data-source-ktx", version.ref = "androidx-wear-watchface" }
+androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.1"
+androidx-core-ktx = "androidx.core:core-ktx:1.15.0"

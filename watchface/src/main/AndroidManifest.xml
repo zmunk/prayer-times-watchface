@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--
+    Copyright 2023 Google LLC
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <uses-feature android:name="android.hardware.type.watch" />
+  <uses-permission android:name="android.permission.INTERNET" />
+
+  <!-- Note: hasCode is required to be false for Watch Face Format -->
+  <application
+      android:label="@string/watch_face_name"
+      android:hasCode="true">
+    <property
+        android:name="com.google.wear.watchface.format.version"
+        android:value="1" />
+
+      <!-- see wear-os-samples/Complications/Wearable/src
+        /main/java/com/example/android/wearable/wear/complications
+        /RangedValueDataSourceService.kt -->
+      <service
+          android:name="com.example.android.wearable.wear.complications.RangedValueDataSourceService"
+          android:exported="true"
+          android:icon="@drawable/ic_data_usage_vd_theme_24"
+          android:label="@string/ranged_value_label"
+          android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+          <intent-filter>
+              <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+          </intent-filter>
+
+          <meta-data
+              android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+              android:value="RANGED_VALUE" />
+          <meta-data
+              android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+              android:value="300" />
+      </service>
+
+  </application>
+</manifest>

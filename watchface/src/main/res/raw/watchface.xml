@@ -1,0 +1,218 @@
+<WatchFace width="450" height="450">
+  <Metadata key="CLOCK_TYPE" value="ANALOG" />
+  <Metadata key="PREVIEW_TIME" value="10:08:32" />
+
+  <UserConfigurations>
+    <ColorConfiguration id="themeColor" defaultValue="0" displayName="colors_label" screenReaderText="colors_label">
+      <ColorOption displayName="theme_one_label" id="0" colors="#16697a #d6d5d4 #ffa62b #333333 #000000"/>
+      <ColorOption displayName="theme_two_label" id="1" colors="#16697a #d6d5d4 #33cd2b #333333 #000000"/>
+    </ColorConfiguration>
+  </UserConfigurations>
+
+  <Scene>
+    <PartImage x="0" y="0" width="450" height="450">
+      <Image resource="analog_watch_face"></Image>
+    </PartImage>
+
+    <ComplicationSlot
+        x="15" y="15"
+        width="420" height="420"
+        slotId="0"
+        name="top_complication" displayName="Top"
+        supportedTypes="RANGED_VALUE"
+    >
+      <BoundingOval x="0" y="0" width="420" height="420" />
+      <DefaultProviderPolicy
+        defaultSystemProvider="EMPTY"
+        defaultSystemProviderType="RANGED_VALUE"
+        primaryProvider="com.example.android.wearable.wear.complications.RangedValueDataSourceService"
+        primaryProviderType="RANGED_VALUE"
+      />
+      <Variant mode="AMBIENT" target="alpha" value="255" />
+      <Complication type="RANGED_VALUE">
+        <Group name="ranged_value_ring" x="0" y="0" width="420" height="420" alpha="255">
+
+          <PartText x="110" y="250" width="200" height="100">
+            <Text align="CENTER" ellipsis="TRUE">
+              <Font family="SYNC_TO_DEVICE" size="20" weight="NORMAL" slant="NORMAL" color="#f08080">
+                <Template>%s
+                  <Parameter expression="[COMPLICATION.TEXT]"/>
+                </Template>
+              </Font>
+            </Text>
+          </PartText>
+
+          <Condition>
+            <Expressions>
+              <!-- visible only if next prayer value is less than 360 and tick mark is in front of hour hand -->
+              <Expression name="visible">
+                <![CDATA[(
+                  round(subText([COMPLICATION.TITLE], 0, 3)) < 360
+                ) && (
+                  (round(subText([COMPLICATION.TITLE], 0, 3)) - ([HOUR_0_11_MINUTE] / 12 * 360) + 360) % 360 < 330
+                ) && (
+                  (round(subText([COMPLICATION.TITLE], 0, 3)) - ([HOUR_0_11_MINUTE] / 12 * 360) + 360) % 360 > 0
+                )]]>
+              </Expression>
+            </Expressions>
+            <Compare expression="visible">
+
+              <!-- Dark grey bar (hour-level) -->
+              <PartDraw x="40" y="40" height="340" width="340">
+                <Variant mode="AMBIENT" target="alpha" value="0" />
+                <Arc startAngle="0" endAngle="0" direction="CLOCKWISE" centerX="170" centerY="170" width="340" height="340">
+                  <Transform
+                    target="startAngle"
+                    value="round([HOUR_0_11_MINUTE] / 12 * 360)"
+                    />
+                  <Transform
+                    target="endAngle"
+                    value="round(subText([COMPLICATION.TITLE], 0, 3))"
+                    />
+                  <Stroke color="#7a7a7a" cap="ROUND" thickness="5" />
+                </Arc>
+              </PartDraw>
+
+              <!-- White dot (hour-level) : next prayer [0] -->
+              <PartDraw x="40" y="40" height="340" width="340">
+                <Variant mode="AMBIENT" target="alpha" value="0" />
+                <Arc startAngle="0" endAngle="0" direction="CLOCKWISE" centerX="170" centerY="170" width="340" height="340">
+                  <Transform
+                    target="startAngle"
+                    value="round(subText([COMPLICATION.TITLE], 0, 3))"
+                    />
+                  <Transform
+                    target="endAngle"
+                    value="round(subText([COMPLICATION.TITLE], 0, 3)) + 0.1"
+                    />
+                  <Stroke color="#ffffff" cap="ROUND" thickness="10" />
+                </Arc>
+              </PartDraw>
+
+            </Compare>
+          </Condition>
+
+          <!-- visible only if prayer1 (2nd upcoming prayer) value is less than 360 -->
+          <Condition>
+            <Expressions>
+              <Expression name="visible">
+                <![CDATA[
+                  round(subText([COMPLICATION.TITLE], 3, 6)) < 360
+                ]]>
+              </Expression>
+            </Expressions>
+            <Compare expression="visible">
+
+              <!-- White dot (hour-level) : next prayer [1] -->
+              <PartDraw x="40" y="40" height="340" width="340">
+                <Variant mode="AMBIENT" target="alpha" value="0" />
+                <Arc startAngle="0" endAngle="0" direction="CLOCKWISE" centerX="170" centerY="170" width="340" height="340">
+                  <Transform
+                    target="startAngle"
+                    value="round(subText([COMPLICATION.TITLE], 3, 6))"
+                    />
+                  <Transform
+                    target="endAngle"
+                    value="round(subText([COMPLICATION.TITLE], 3, 6)) + 0.1"
+                    />
+                  <Stroke color="#989898" cap="ROUND" thickness="10" />
+                </Arc>
+              </PartDraw>
+            </Compare>
+          </Condition>
+
+          <!-- visible only if prayer2 (3rd upcoming prayer) value is less than 360 -->
+          <Condition>
+            <Expressions>
+                <Expression name="visible">
+                  <![CDATA[
+                    round(subText([COMPLICATION.TITLE], 6, 9)) < 360
+                  ]]>
+                </Expression>
+            </Expressions>
+            <Compare expression="visible">
+              <!-- White dot (hour-level) : next prayer [2] -->
+              <PartDraw x="40" y="40" height="340" width="340">
+                <Variant mode="AMBIENT" target="alpha" value="0" />
+                <Arc startAngle="0" endAngle="0" direction="CLOCKWISE" centerX="170" centerY="170" width="340" height="340">
+                  <Transform
+                    target="startAngle"
+                    value="round(subText([COMPLICATION.TITLE], 6, 9))"
+                    />
+                  <Transform
+                    target="endAngle"
+                    value="round(subText([COMPLICATION.TITLE], 6, 9)) + 0.1"
+                    />
+                  <Stroke color="#323232" cap="ROUND" thickness="10" />
+                </Arc>
+              </PartDraw>
+            </Compare>
+          </Condition>
+
+          <Condition>
+            <Expressions>
+                <Expression name="visible">
+                  <!-- visible only if less than 45 minutes left -->
+                <![CDATA[
+                (
+                  round(subText([COMPLICATION.TITLE], 9, 12)) < 360
+                ) && (
+                  (round(subText([COMPLICATION.TITLE], 9, 12)) - (([MINUTE] / 60) * 360 + ([SECOND] / 60 / 60) * 360) + 360) % 360 < 270
+                )
+                ]]>
+                </Expression>
+            </Expressions>
+            <Compare expression="visible">
+              <!-- outer green band (minute hand level) -->
+              <PartDraw x="0" y="0" height="420" width="420">
+                <Variant mode="AMBIENT" target="alpha" value="0" />
+                <Arc startAngle="0" endAngle="0" direction="CLOCKWISE" centerX="210" centerY="210" width="420" height="420">
+                  <Transform
+                    target="startAngle"
+                    value="round(([MINUTE] / 60) * 360 + ([SECOND] / 60 / 60) * 360)"
+                  />
+                  <Transform
+                    target="endAngle"
+                    value="round(subText([COMPLICATION.TITLE], 9, 12))"
+                  />
+                  <Stroke color="#a7c957" cap="ROUND" thickness="5" />
+                </Arc>
+
+                <!-- White dot -->
+                <Arc startAngle="0" endAngle="0" direction="CLOCKWISE" centerX="210" centerY="210" width="420" height="420">
+                  <Transform
+                    target="startAngle"
+                    value="round(subText([COMPLICATION.TITLE], 9, 12))"
+                    />
+                  <Transform
+                    target="endAngle"
+                    value="round(subText([COMPLICATION.TITLE], 9, 12)) + 0.1"
+                    />
+                  <Stroke color="#ffffff" cap="ROUND" thickness="10" />
+                </Arc>
+              </PartDraw>
+            </Compare>
+          </Condition>
+
+        </Group>
+      </Complication>
+    </ComplicationSlot>
+
+    <AnalogClock x="0" y="0" width="450" height="450">
+      <!-- y: 450 / 2 - height -->
+      <HourHand resource="hand" x="224" y="53" width="3" height="172" pivotX="0.5" pivotY="1"/>
+      <MinuteHand resource="hand" x="224" y="15" width="3" height="210" pivotX="0.5" pivotY="1"/>
+    </AnalogClock>
+
+    <!-- white circle -->
+    <PartDraw x="0" y="0" width="450" height="450">
+      <!-- x: 450 / 2 - width / 2 -->
+      <!-- y: 450 / 2 - height / 2 -->
+      <Ellipse x="220" y="220" height="10" width="10" >
+        <Stroke color="#ffffff" thickness="2" />
+        <Fill color="#000000"></Fill>
+      </Ellipse>
+    </PartDraw>
+
+  </Scene>
+</WatchFace>

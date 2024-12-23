@@ -1,0 +1,7 @@
+build/
+.gradle
+terraform/.terraform
+terraform/builds
+terraform/terraform.tfstate*
+.DS_Store
+.envrc
